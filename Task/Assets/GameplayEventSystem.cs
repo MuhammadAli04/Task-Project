@@ -21,4 +21,11 @@ public static class GameplayEventSystem
     {
         OnSetCardId?.Invoke(id);
     }
+
+    public static event Action OnLoadCard;
+
+    public static void LoadCard()
+    {
+        OnLoadCard?.Invoke();
+    }
 }

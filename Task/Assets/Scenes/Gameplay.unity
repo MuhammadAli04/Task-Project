@@ -366,6 +366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc9c34a966dfa241a1c45f098adf343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardDelayTime: 1
+  cardGridHandler: {fileID: 1571254129}
 --- !u!1 &647310986
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,9 +645,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1571254129}
-        m_TargetAssemblyTypeName: CardGridHandler, Assembly-CSharp
-        m_MethodName: GenerateCard
+      - m_Target: {fileID: 480886081}
+        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
+        m_MethodName: InIt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -811,8 +813,25 @@ MonoBehaviour:
   layoutTwo: {fileID: 11400000, guid: ce2f3ac2b130dbc4fb59a92fb7718d99, type: 2}
   layoutThree: {fileID: 11400000, guid: fe52ca7df218f0f4c84172f3a7d2aa2e, type: 2}
   card: {fileID: 3808308659663248085, guid: 6c1ef937950df3a40ae60a1877869b56, type: 3}
+  cardSprites:
+  - {fileID: 21300000, guid: dac007e0852d93f419dfb3e8b0f94025, type: 3}
+  - {fileID: 21300000, guid: 4cabac613c053e84584a2f08714f36e4, type: 3}
+  - {fileID: 21300000, guid: 02b696e967a062546810418d8d346e36, type: 3}
+  - {fileID: 21300000, guid: 42d13629350befe499699638560b5212, type: 3}
+  - {fileID: 21300000, guid: 9829de70aa835364281992386cfd67c9, type: 3}
+  - {fileID: 21300000, guid: 7f689d3f25c53c24181d1bd6f99216e2, type: 3}
+  - {fileID: 21300000, guid: bc09a4b11cf2a8e4b88df4412e06906d, type: 3}
+  - {fileID: 21300000, guid: 27774ea26bc8e8e43b307abf1070c864, type: 3}
+  - {fileID: 21300000, guid: 060d6b37f53150e42928ec2ff94b4520, type: 3}
+  - {fileID: 21300000, guid: c4e391838e4bb894ebcf8e9a3c03eeb9, type: 3}
+  - {fileID: 21300000, guid: e1d1c1b1e4b016a4cb83e56684ccf7d8, type: 3}
+  - {fileID: 21300000, guid: 9da023b91d88ae94eb2e927b73b0ba6d, type: 3}
+  - {fileID: 21300000, guid: 9002e5d092e47774e9880e2900bdee27, type: 3}
+  - {fileID: 21300000, guid: 27ad005d32140ea448168912de31a491, type: 3}
+  - {fileID: 21300000, guid: c5a1277ab86b9c943a164d8f0094cd35, type: 3}
   cardGrid: {fileID: 647310987}
   cardGridLayoutHandler: {fileID: 647310991}
+  cards: []
 --- !u!4 &1571254130
 Transform:
   m_ObjectHideFlags: 0

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class CardGridHandler : MonoBehaviour
@@ -20,6 +22,8 @@ public class CardGridHandler : MonoBehaviour
     [SerializeField] private GridSO layoutThree;
     [SerializeField] private GameObject card;
 
+    [SerializeField] private Sprite[] cardSprites;
+
     [SerializeField] private Transform cardGrid;
     [SerializeField] private CardGridLayoutHandler cardGridLayoutHandler;
     private GridSO _gridSo;
@@ -28,7 +32,16 @@ public class CardGridHandler : MonoBehaviour
     void Start()
     {
         CheckLayout();
+    }
 
+    private void OnEnable()
+    {
+        GameplayEventSystem.OnLoadCard += LoadCards;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEventSystem.OnLoadCard -= LoadCards;
     }
 
     private void CheckLayout()
@@ -46,10 +59,7 @@ public class CardGridHandler : MonoBehaviour
                 break;
         } 
     }
-
-    public List<Card> _cardsList = new List<Card>();
-    private int temp;
-    public void GenerateCard()
+    private void LoadCards()
     {
         cardGridLayoutHandler.SetRowsColumnsValue(_gridSo.rows,_gridSo.columns,_gridSo.topPadding,_gridSo.spacing);
         var cardsCount = _gridSo.rows * _gridSo.columns;
@@ -57,20 +67,6 @@ public class CardGridHandler : MonoBehaviour
         var cardIDs = GenerateRandomCardIDs(cardsCount / 2);
         Shuffle(cardIDs);
         InstantiateCards(cardIDs);
-        
-        /*for (int i = 0; i < cardsCount / 2; i++)
-        {
-            var g1 = Instantiate(card, cardGrid, false);
-            var c1 = g1.GetComponent<Card>();
-            c1.SetCardData(i);
-            
-            var g2 = Instantiate(card, cardGrid, false);
-            var c2 = g2.GetComponent<Card>();
-            c2.SetCardData(i);
-            
-            _cardsList.Add(c1);
-            _cardsList.Add(c2);
-        }*/
     }
     
     private List<int> GenerateRandomCardIDs(int paris)
@@ -97,16 +93,23 @@ public class CardGridHandler : MonoBehaviour
         }
     }
 
+    public List<Card> cards = new List<Card>();
+
     private void InstantiateCards(List<int> cardIDs)
     {
         foreach (var t in cardIDs)
         {
-            var c = Instantiate(card,cardGrid,false);
-            c.GetComponent<Card>().SetCardData(t);
+            var o = Instantiate(card,cardGrid,false);
+            var c = o.GetComponent<Card>();
+            cards.Add(c);
+            c.SetCardData(t);
+            c.SetCardSprites(cardSprites[t]);
         }
         
         Invoke(nameof(DisableGridComponent),1f);
     }
+    
+    
     
     private void DisableGridComponent()
     {
