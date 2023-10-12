@@ -79,7 +79,6 @@ public class GameController : MonoBehaviour
             _secondCard.gameObject.SetActive(false);
             HandleMatch(_firstCard,_secondCard);
             var s=Prefs.Score += 1;
-            Debug.Log(s);
             GameplayEventSystem.UpdateScoreText(s);
             CheckGameStatus();
         }
@@ -103,6 +102,7 @@ public class GameController : MonoBehaviour
         if (score == pairs)
         {
             PlayerPrefs.DeleteAll();
+            GameplayEventSystem.EnableGameComplete();
             Debug.Log("GameComplete");
         }
     }

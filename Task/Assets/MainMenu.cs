@@ -33,7 +33,14 @@ public class MainMenu : MonoBehaviour
         GameplayEventSystem.GameStart();
     }
 
-    public void Restart()
+    public void RestartBtn()
+    {
+        //Prefs.Score = 0;
+        //GameplayEventSystem.ResetCardState();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    public void MainMenuBtn()
     {
         Prefs.Score = 0;
         GameplayEventSystem.ResetCardState();

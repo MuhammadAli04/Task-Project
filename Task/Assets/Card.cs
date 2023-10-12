@@ -43,9 +43,9 @@ public class Card : MonoBehaviour
         _isFlipped = f;
     }
 
-    public void OnButton()
+    private void OnButton()
     {
-        Debug.Log(_isFlipped);
+        //Debug.Log(_isFlipped);
         if (!_isFlipped)
         {
             _isFlipped = true;

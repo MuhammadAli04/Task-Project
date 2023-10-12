@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject gameplay;
+    [SerializeField] private GameObject gameComplete;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     // Start is called before the first frame update
@@ -19,6 +20,8 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableMainMenu += DisableMainMenu;
         GameplayEventSystem.OnEnableGameplay += EnableGameplay;
         GameplayEventSystem.OnDisableGameplay += DisableGameplay;
+        GameplayEventSystem.OnEnableGameComplete += EnableGameComplete;
+        GameplayEventSystem.OnDisableGameComplete += DisableGameComplete;
         GameplayEventSystem.OnDisableAll += DisableAll;
         GameplayEventSystem.OnUpdateScoreText += UpdateScore;
     }
@@ -29,6 +32,8 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableMainMenu -= DisableMainMenu;
         GameplayEventSystem.OnEnableGameplay -= EnableGameplay;
         GameplayEventSystem.OnDisableGameplay -= DisableGameplay;
+        GameplayEventSystem.OnEnableGameComplete -= EnableGameComplete;
+        GameplayEventSystem.OnDisableGameComplete -= DisableGameComplete;
         GameplayEventSystem.OnDisableAll -= DisableAll;
         GameplayEventSystem.OnUpdateScoreText -= UpdateScore;
     }
@@ -53,10 +58,21 @@ public class UIManager : MonoBehaviour
         gameplay.SetActive(false);
     }
 
+    private void EnableGameComplete()
+    {
+        gameComplete.SetActive(true);
+    }
+
+    private void DisableGameComplete()
+    {
+        gameComplete.SetActive(false);
+    }
+
     private void DisableAll()
     {
         DisableMainMenu();
         DisableGameplay();
+        DisableGameComplete();
     }
 
     private void UpdateScore(int score)

@@ -71,6 +71,19 @@ public static class GameplayEventSystem
         OnDisableGameplay?.Invoke();
     }
 
+    public static event Action OnEnableGameComplete;
+
+    public static void EnableGameComplete()
+    {
+        OnEnableGameComplete?.Invoke();
+    }
+
+    public static event Action OnDisableGameComplete;
+
+    public static void DisableGameComplete()
+    {
+        OnDisableGameComplete?.Invoke();
+    }
     public static event Action OnDisableAll;
 
     public static void DisableAll()
