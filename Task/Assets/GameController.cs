@@ -13,24 +13,25 @@ public class GameController : MonoBehaviour
     private Card _firstCard;
     private Card _secondCard;
 
-    private bool _canFlip = true;
-
-    private string _savePathFile;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        _savePathFile = Application.persistentDataPath + "/cardData.json";
-    }
-
-    private void Start()
-    {
-        
-    }
     
-    public void InIt()
+    private void OnEnable()
+    {
+        GameplayEventSystem.OnCardFlipped += CardFlipped;
+        GameplayEventSystem.OnGameStart += InIt;
+        GameplayEventSystem.OnResetCardState += ResetCardState;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEventSystem.OnCardFlipped -= CardFlipped;
+        GameplayEventSystem.OnGameStart -= InIt;
+        GameplayEventSystem.OnResetCardState -= ResetCardState;
+    }
+    private void InIt()
     {
         GameplayEventSystem.LoadCard();
         LoadCardState();
+        GameplayEventSystem.UpdateScoreText(Prefs.Score);
     }
 
     private void LoadCardState()
@@ -42,20 +43,16 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void ResetCardState()
     {
-        GameplayEventSystem.OnCardFlipped += CardFlipped;
+        var count = cardGridHandler.cards.Count;
+        for (var i = 0; i < count; i++)
+        {
+            cardGridHandler.cards[i].ResetCardState();
+        }
     }
 
-    private void OnDisable()
-    {
-        GameplayEventSystem.OnCardFlipped -= CardFlipped;
-    }
-
-    public bool CanFlip()
-    {
-        return _canFlip;
-    }
+ 
 
     private void CardFlipped(Card c)
     {
@@ -66,7 +63,7 @@ public class GameController : MonoBehaviour
         else
         {
             _secondCard = c;
-            _canFlip = false;
+
             StartCoroutine(CardMatchingRoutine());
         }
     }
@@ -81,6 +78,10 @@ public class GameController : MonoBehaviour
             _firstCard.gameObject.SetActive(false);
             _secondCard.gameObject.SetActive(false);
             HandleMatch(_firstCard,_secondCard);
+            var s=Prefs.Score += 1;
+            Debug.Log(s);
+            GameplayEventSystem.UpdateScoreText(s);
+            CheckGameStatus();
         }
         else
         {
@@ -93,7 +94,17 @@ public class GameController : MonoBehaviour
         _firstCard = null;
         _secondCard = null;
         EnableFlipStatus();
-        _canFlip = true;
+    }
+
+    private void CheckGameStatus()
+    {
+        var pairs = cardGridHandler.GetTotalPairs();
+        var score = Prefs.Score;
+        if (score == pairs)
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log("GameComplete");
+        }
     }
 
     private void DisableFlipStatus()
@@ -117,5 +128,8 @@ public class GameController : MonoBehaviour
         card1.IsMatched();
         card2.IsMatched();
     }
+
+
+   
     
 }

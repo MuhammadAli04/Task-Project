@@ -16,3 +16,4 @@ MonoBehaviour:
   columns: 6
   topPadding: 100
   spacing: {x: 50, y: 50}
+  gridPosition: {x: -97, y: 25}

@@ -47,12 +47,13 @@ public class CardGridLayoutHandler : LayoutGroup
         }
     }
 
-    public void SetRowsColumnsValue(int r, int c, int p, Vector2 s)
+    public void SetRowsColumnsValue(int r, int c, int p, Vector2 s,Vector2 gp)
     {
         rows = r;
         columns = c;
         topPadding = p;
         spacing = s;
+        transform.localPosition = gp;
     }
 
     public override void SetLayoutHorizontal()

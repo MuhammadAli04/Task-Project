@@ -127,7 +127,7 @@ public class Card : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void SaveCardState()
+    private void SaveCardState()
     {
         PlayerPrefs.SetInt("Card_" + cardId, _isMatched ? 1 : 0);
         PlayerPrefs.Save();
@@ -141,6 +141,12 @@ public class Card : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    public void ResetCardState()
+    {
+        PlayerPrefs.SetInt("Card_" + cardId, 0);
+    }
+    
     
     private void EnableCardFrontImage()
     {
