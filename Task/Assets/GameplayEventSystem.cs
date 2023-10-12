@@ -4,21 +4,21 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class GameplayEventSystem : MonoBehaviour
+public static class GameplayEventSystem
 {
-    public static GameplayEventSystem Instance;
 
-    public event Action OnSetRowsValue;
 
-    public void SetRowsValue()
+    public static event Action<Card> OnCardFlipped;
+
+    public static void CardFlipped(Card c)
     {
-        OnSetRowsValue?.Invoke();
+        OnCardFlipped?.Invoke(c);
     }
 
-    public event Action OnSetColumnsValue;
+    public static event Action<int> OnSetCardId;
 
-    public void SetColumnsValue()
+    public static void SetCardId(int id)
     {
-        OnSetColumnsValue?.Invoke();
+        OnSetCardId?.Invoke(id);
     }
 }
