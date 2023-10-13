@@ -7,7 +7,7 @@ public class ComboText : MonoBehaviour
 {
     private void OnEnable()
     {
-        Invoke(nameof(DisableText),1);
+        Invoke(nameof(DisableText),0.8f);
     }
 
     private void DisableText()
