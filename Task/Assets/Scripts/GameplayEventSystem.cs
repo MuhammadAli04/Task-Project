@@ -57,6 +57,19 @@ public static class GameplayEventSystem
         OnDisableMainMenu?.Invoke();
     }
 
+    public static event Action OnEnableLayout;
+    public static void EnableLayout()
+    {
+        OnEnableLayout?.Invoke();
+    }
+
+    public static event Action OnDisableLayout;
+
+    public static void DisableLayout()
+    {
+        OnDisableLayout?.Invoke();
+    }
+
     public static event Action OnEnableGameplay;
 
     public static void EnableGameplay()
@@ -113,6 +126,20 @@ public static class GameplayEventSystem
         OnDisableSoundOffImage?.Invoke();
     }
 
+    public static event Action OnEnableRestartBtnInteractable;
+
+    public static void EnableRestartBtnInteractable()
+    {
+        OnEnableRestartBtnInteractable?.Invoke();
+    }
+    
+    public static event Action OnDisableRestartBtnInteractable;
+
+    public static void DisableRestartBtnInteractable()
+    {
+        OnDisableRestartBtnInteractable?.Invoke();
+    }
+
     public static event Action OnDisableAll;
 
     public static void DisableAll()
@@ -133,6 +160,8 @@ public static class GameplayEventSystem
     {
         OnResetCardState?.Invoke();
     }
+    
+    
 
     
 }

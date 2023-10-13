@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject layout;
     [SerializeField] private GameObject gameplay;
     [SerializeField] private GameObject gameComplete;
 
     [SerializeField] private GameObject soundOnImage;
     [SerializeField] private GameObject soundOffImage;
 
+    [SerializeField] private Button restartBtn;
     [SerializeField] private TextMeshProUGUI scoreText;
     // Start is called before the first frame update
 
@@ -25,10 +28,14 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableGameplay += DisableGameplay;
         GameplayEventSystem.OnEnableGameComplete += EnableGameComplete;
         GameplayEventSystem.OnDisableGameComplete += DisableGameComplete;
+        GameplayEventSystem.OnEnableLayout += EnableLayout;
+        GameplayEventSystem.OnDisableLayout += DisableLayout;
         GameplayEventSystem.OnEnableSoundOnImage += EnableSoundOnImage;
         GameplayEventSystem.OnDisableSoundOnImage += DisableSoundOnImage;
         GameplayEventSystem.OnEnableSoundOffImage += EnableSoundOffImage;
         GameplayEventSystem.OnDisableSoundOffImage += DisableSoundOffImage;
+        GameplayEventSystem.OnEnableRestartBtnInteractable += EnableRestartInteractable;
+        GameplayEventSystem.OnDisableRestartBtnInteractable += DisableRestartInteractable;
         GameplayEventSystem.OnDisableAll += DisableAll;
         GameplayEventSystem.OnUpdateScoreText += UpdateScore;
     }
@@ -41,10 +48,14 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableGameplay -= DisableGameplay;
         GameplayEventSystem.OnEnableGameComplete -= EnableGameComplete;
         GameplayEventSystem.OnDisableGameComplete -= DisableGameComplete;
+        GameplayEventSystem.OnEnableLayout -= EnableLayout;
+        GameplayEventSystem.OnDisableLayout -= DisableLayout;
         GameplayEventSystem.OnEnableSoundOnImage -= EnableSoundOnImage;
         GameplayEventSystem.OnDisableSoundOnImage -= DisableSoundOnImage;
         GameplayEventSystem.OnEnableSoundOffImage -= EnableSoundOffImage;
         GameplayEventSystem.OnDisableSoundOffImage -= DisableSoundOffImage;
+        GameplayEventSystem.OnEnableRestartBtnInteractable -= EnableRestartInteractable;
+        GameplayEventSystem.OnDisableRestartBtnInteractable -= DisableRestartInteractable;
         GameplayEventSystem.OnDisableAll -= DisableAll;
         GameplayEventSystem.OnUpdateScoreText -= UpdateScore;
     }
@@ -78,6 +89,16 @@ public class UIManager : MonoBehaviour
     {
         gameComplete.SetActive(false);
     }
+    
+    private void EnableLayout()
+    {
+        layout.SetActive(true);
+    }
+
+    private void DisableLayout()
+    {
+        layout.SetActive(false);
+    }
 
     private void EnableSoundOnImage()
     {
@@ -99,6 +120,16 @@ public class UIManager : MonoBehaviour
         soundOffImage.SetActive(false);
     }
     
+    private void EnableRestartInteractable()
+    {
+        restartBtn.interactable = true;
+    }
+
+    private void DisableRestartInteractable()
+    {
+        restartBtn.interactable = false;
+    }
+    
     
 
     private void DisableAll()
@@ -106,6 +137,7 @@ public class UIManager : MonoBehaviour
         DisableMainMenu();
         DisableGameplay();
         DisableGameComplete();
+        DisableLayout();
     }
 
     private void UpdateScore(int score)

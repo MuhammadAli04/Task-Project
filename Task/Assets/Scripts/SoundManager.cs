@@ -66,7 +66,6 @@ public class SoundManager : MonoBehaviour
     public void LevelCompleteSound()
     {
         if(!levelCompleteSound) return;
-        Debug.Log("Sound");
         levelCompleteSound.Play();
     }
 }

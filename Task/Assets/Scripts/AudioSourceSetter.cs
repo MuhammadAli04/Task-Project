@@ -35,8 +35,7 @@ public class AudioSourceSetter : MonoBehaviour
     {
         if (_audioSrc.Length == 0) return;
 
-        Debug.Log(Prefs.SoundVolume);
-        var volVal = Prefs.SoundVolume;
+        var volVal = sourceType == AudioSourceType.SoundSource ? Prefs.SoundVolume : 0;
         
         var perVal = Percent - volVal / MAXVol * Percent;
 

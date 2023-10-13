@@ -33,6 +33,12 @@ public class MainMenu : MonoBehaviour
         GameplayEventSystem.GameStart();
     }
 
+    public void PlayBtn()
+    {
+        GameplayEventSystem.DisableAll();
+        GameplayEventSystem.EnableLayout();
+    }
+
     public void RestartBtn()
     {
         //Prefs.Score = 0;

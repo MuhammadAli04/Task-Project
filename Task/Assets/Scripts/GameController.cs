@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour
             HandleMatch(_firstCard,_secondCard);
             var s=Prefs.Score += 1;
             GameplayEventSystem.UpdateScoreText(s);
-            
+            CheckGameStatus();
         }
         else
         {
@@ -105,18 +105,18 @@ public class GameController : MonoBehaviour
         }
         _firstCard = null;
         _secondCard = null;
-        //CheckGameStatus();
         EnableFlipStatus();
     }
 
     private void CheckGameStatus()
     {
-        
         var pairs = cardGridHandler.GetTotalPairs();
         var score = Prefs.Score;
         if (score == pairs)
-        {
-            PlayerPrefs.DeleteAll();
+        { 
+            GameplayEventSystem.DisableRestartBtnInteractable();
+            Prefs.Score = 0;
+            GameplayEventSystem.ResetCardState();
             Invoke(nameof(LevelCompleted),2f);
             Debug.Log("GameComplete");
         }
