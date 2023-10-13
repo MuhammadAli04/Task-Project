@@ -84,6 +84,35 @@ public static class GameplayEventSystem
     {
         OnDisableGameComplete?.Invoke();
     }
+
+    public static event Action OnEnableSoundOnImage;
+
+    public static void EnableSoundOnImage()
+    {
+        OnEnableSoundOnImage?.Invoke();
+    }
+
+    public static event Action OnDisableSoundOnImage;
+
+    public static void DisableSoundOnImage()
+    {
+        OnDisableSoundOnImage?.Invoke();
+    }
+    
+    public static event Action OnEnableSoundOffImage;
+
+    public static void EnableSoundOffImage()
+    {
+        OnEnableSoundOffImage?.Invoke();
+    }
+
+    public static event Action OnDisableSoundOffImage;
+
+    public static void DisableSoundOffImage()
+    {
+        OnDisableSoundOffImage?.Invoke();
+    }
+
     public static event Action OnDisableAll;
 
     public static void DisableAll()

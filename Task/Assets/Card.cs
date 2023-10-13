@@ -68,12 +68,14 @@ public class Card : MonoBehaviour
 
     private void FlipCard()
     {
+        SoundPlayer.Instance.PlayFlipSound();
         DisableAllImages();
         EnableCardFrontImage();
     }
 
     public void UnFlipCard()
-    {
+    { 
+        SoundPlayer.Instance.PlayBackFlipSound();
        DisableAllImages();
        EnableCardBackImage();
     }

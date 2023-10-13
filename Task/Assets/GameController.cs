@@ -8,14 +8,25 @@ using UnityEngine.Windows;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance;
     [SerializeField] private float cardDelayTime = 1f;
     [SerializeField] private CardGridHandler cardGridHandler;
     private Card _firstCard;
     private Card _secondCard;
 
-    
+    private void Awake()
+    {
+        if (Prefs.FirstTimeSound == 0)
+        {
+            SetSoundVolume(1);
+            Prefs.FirstTimeSound = 1;
+        }
+    }
+
     private void OnEnable()
     {
+        Instance = this;
+       
         GameplayEventSystem.OnCardFlipped += CardFlipped;
         GameplayEventSystem.OnGameStart += InIt;
         GameplayEventSystem.OnResetCardState += ResetCardState;
@@ -31,6 +42,7 @@ public class GameController : MonoBehaviour
     {
         GameplayEventSystem.LoadCard();
         LoadCardState();
+        CheckSoundStatus();
         GameplayEventSystem.UpdateScoreText(Prefs.Score);
     }
 
@@ -75,12 +87,13 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Matched");
             yield return new WaitForSeconds(cardDelayTime);
+            SoundPlayer.Instance.PlayMatchedSound();
             _firstCard.gameObject.SetActive(false);
             _secondCard.gameObject.SetActive(false);
             HandleMatch(_firstCard,_secondCard);
             var s=Prefs.Score += 1;
             GameplayEventSystem.UpdateScoreText(s);
-            CheckGameStatus();
+            
         }
         else
         {
@@ -92,20 +105,28 @@ public class GameController : MonoBehaviour
         }
         _firstCard = null;
         _secondCard = null;
+        //CheckGameStatus();
         EnableFlipStatus();
     }
 
     private void CheckGameStatus()
     {
+        
         var pairs = cardGridHandler.GetTotalPairs();
         var score = Prefs.Score;
         if (score == pairs)
         {
             PlayerPrefs.DeleteAll();
-            GameplayEventSystem.EnableGameComplete();
+            Invoke(nameof(LevelCompleted),2f);
             Debug.Log("GameComplete");
         }
     }
+
+    private void LevelCompleted()
+    {
+        GameplayEventSystem.EnableGameComplete();
+    }
+
 
     private void DisableFlipStatus()
     {
@@ -129,7 +150,42 @@ public class GameController : MonoBehaviour
         card2.IsMatched();
     }
 
+    private void CheckSoundStatus()
+    {
+        if (Prefs.SoundVolume == 1)
+        {
+            GameplayEventSystem.DisableSoundOnImage();
+            GameplayEventSystem.DisableSoundOffImage();
+            GameplayEventSystem.EnableSoundOffImage();
+        }
+        else
+        {
+            GameplayEventSystem.DisableSoundOnImage();
+            GameplayEventSystem.DisableSoundOffImage();
+            GameplayEventSystem.EnableSoundOnImage();
+        }
+    }
 
+    public void SoundOn()
+    {
+        GameplayEventSystem.DisableSoundOnImage();
+        GameplayEventSystem.DisableSoundOffImage();
+        GameplayEventSystem.EnableSoundOffImage();
+        SetSoundVolume(1);
+    }
+    
+    public void SoundOff()
+    {
+        GameplayEventSystem.DisableSoundOnImage();
+        GameplayEventSystem.DisableSoundOffImage();
+        GameplayEventSystem.EnableSoundOnImage();
+        SetSoundVolume(0);
+    }
+
+    public void SetSoundVolume(float val)
+    {
+        Prefs.SoundVolume = val;
+    }
    
     
 }

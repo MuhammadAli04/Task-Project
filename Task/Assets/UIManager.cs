@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameplay;
     [SerializeField] private GameObject gameComplete;
 
+    [SerializeField] private GameObject soundOnImage;
+    [SerializeField] private GameObject soundOffImage;
+
     [SerializeField] private TextMeshProUGUI scoreText;
     // Start is called before the first frame update
 
@@ -22,6 +25,10 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableGameplay += DisableGameplay;
         GameplayEventSystem.OnEnableGameComplete += EnableGameComplete;
         GameplayEventSystem.OnDisableGameComplete += DisableGameComplete;
+        GameplayEventSystem.OnEnableSoundOnImage += EnableSoundOnImage;
+        GameplayEventSystem.OnDisableSoundOnImage += DisableSoundOnImage;
+        GameplayEventSystem.OnEnableSoundOffImage += EnableSoundOffImage;
+        GameplayEventSystem.OnDisableSoundOffImage += DisableSoundOffImage;
         GameplayEventSystem.OnDisableAll += DisableAll;
         GameplayEventSystem.OnUpdateScoreText += UpdateScore;
     }
@@ -34,6 +41,10 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableGameplay -= DisableGameplay;
         GameplayEventSystem.OnEnableGameComplete -= EnableGameComplete;
         GameplayEventSystem.OnDisableGameComplete -= DisableGameComplete;
+        GameplayEventSystem.OnEnableSoundOnImage -= EnableSoundOnImage;
+        GameplayEventSystem.OnDisableSoundOnImage -= DisableSoundOnImage;
+        GameplayEventSystem.OnEnableSoundOffImage -= EnableSoundOffImage;
+        GameplayEventSystem.OnDisableSoundOffImage -= DisableSoundOffImage;
         GameplayEventSystem.OnDisableAll -= DisableAll;
         GameplayEventSystem.OnUpdateScoreText -= UpdateScore;
     }
@@ -67,6 +78,28 @@ public class UIManager : MonoBehaviour
     {
         gameComplete.SetActive(false);
     }
+
+    private void EnableSoundOnImage()
+    {
+        soundOnImage.SetActive(true);
+    }
+
+    private void DisableSoundOnImage()
+    {
+        soundOnImage.SetActive(false);
+    }
+
+    private void EnableSoundOffImage()
+    {
+        soundOffImage.SetActive(true);
+    }
+
+    private void DisableSoundOffImage()
+    {
+        soundOffImage.SetActive(false);
+    }
+    
+    
 
     private void DisableAll()
     {
