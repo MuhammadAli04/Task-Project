@@ -21,4 +21,10 @@ public static class Prefs
         get => PlayerPrefs.GetInt("FirstTimeSound", 0);
         set => PlayerPrefs.SetInt("FirstTimeSound", value);
     }
+
+    public static int ComboValue
+    {
+        get => PlayerPrefs.GetInt("ComboValue", 0);
+        set => PlayerPrefs.SetInt("ComboValue", value);
+    }
 }

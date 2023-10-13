@@ -93,6 +93,8 @@ public class GameController : MonoBehaviour
             HandleMatch(_firstCard,_secondCard);
             var s=Prefs.Score += 1;
             GameplayEventSystem.UpdateScoreText(s);
+            Prefs.ComboValue += 1;
+            CheckComboSystem();
             CheckGameStatus();
         }
         else
@@ -101,11 +103,21 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(cardDelayTime);
             _firstCard.UnFlipCard();
             _secondCard.UnFlipCard();
-           
+            Prefs.ComboValue = 0;
         }
         _firstCard = null;
         _secondCard = null;
         EnableFlipStatus();
+    }
+
+    private void CheckComboSystem()
+    {
+        var comboScore = Prefs.ComboValue;
+        if (comboScore >= 2)
+        {
+            GameplayEventSystem.EnableComboText();
+            Prefs.ComboValue = 0;
+        }
     }
 
     private void CheckGameStatus()
@@ -116,6 +128,7 @@ public class GameController : MonoBehaviour
         { 
             GameplayEventSystem.DisableRestartBtnInteractable();
             Prefs.Score = 0;
+            Prefs.ComboValue = 0;
             GameplayEventSystem.ResetCardState();
             Invoke(nameof(LevelCompleted),2f);
             Debug.Log("GameComplete");

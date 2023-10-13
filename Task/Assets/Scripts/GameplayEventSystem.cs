@@ -140,6 +140,20 @@ public static class GameplayEventSystem
         OnDisableRestartBtnInteractable?.Invoke();
     }
 
+    public static event Action OnEnableComboText;
+
+    public static void EnableComboText()
+    {
+        OnEnableComboText?.Invoke();
+    }
+
+    public static event Action OnDisableComboText;
+
+    public static void DisableComboText()
+    {
+        OnDisableComboText?.Invoke();
+    }
+
     public static event Action OnDisableAll;
 
     public static void DisableAll()

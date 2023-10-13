@@ -17,6 +17,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Button restartBtn;
     [SerializeField] private TextMeshProUGUI scoreText;
+
+    [SerializeField] private TextMeshProUGUI comboText;
     // Start is called before the first frame update
 
 
@@ -36,6 +38,8 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableSoundOffImage += DisableSoundOffImage;
         GameplayEventSystem.OnEnableRestartBtnInteractable += EnableRestartInteractable;
         GameplayEventSystem.OnDisableRestartBtnInteractable += DisableRestartInteractable;
+        GameplayEventSystem.OnEnableComboText += EnableComboText;
+        GameplayEventSystem.OnDisableComboText += DisableComboText;
         GameplayEventSystem.OnDisableAll += DisableAll;
         GameplayEventSystem.OnUpdateScoreText += UpdateScore;
     }
@@ -56,6 +60,8 @@ public class UIManager : MonoBehaviour
         GameplayEventSystem.OnDisableSoundOffImage -= DisableSoundOffImage;
         GameplayEventSystem.OnEnableRestartBtnInteractable -= EnableRestartInteractable;
         GameplayEventSystem.OnDisableRestartBtnInteractable -= DisableRestartInteractable;
+        GameplayEventSystem.OnEnableComboText -= EnableComboText;
+        GameplayEventSystem.OnDisableComboText -= DisableComboText;
         GameplayEventSystem.OnDisableAll -= DisableAll;
         GameplayEventSystem.OnUpdateScoreText -= UpdateScore;
     }
@@ -128,6 +134,16 @@ public class UIManager : MonoBehaviour
     private void DisableRestartInteractable()
     {
         restartBtn.interactable = false;
+    }
+
+    private void EnableComboText()
+    {
+        comboText.gameObject.SetActive(true);
+    }
+
+    private void DisableComboText()
+    {
+        comboText.gameObject.SetActive(false);
     }
     
     
